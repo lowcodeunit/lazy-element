@@ -1,0 +1,321 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "common": {
+      "root": "projects/common",
+      "sourceRoot": "projects/common/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/common/tsconfig.lib.json",
+            "project": "projects/common/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/common/src/test.ts",
+            "tsConfig": "projects/common/tsconfig.spec.json",
+            "karmaConfig": "projects/common/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/common/tsconfig.lib.json",
+              "projects/common/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "lazy-element": {
+      "root": "projects/lazy-element/",
+      "sourceRoot": "projects/lazy-element/src",
+      "projectType": "application",
+      "prefix": "lib",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "ngx-build-plus:build",
+          "options": {
+            "outputPath": "dist/lazy-element",
+            "index": "projects/lazy-element/src/index.html",
+            "main": "projects/lazy-element/src/main.ts",
+            "polyfills": "projects/lazy-element/src/polyfills.ts",
+            "tsConfig": "projects/lazy-element/tsconfig.app.json",
+            "assets": [
+              "projects/lazy-element/src/favicon.ico",
+              "projects/lazy-element/src/assets",
+              {
+                "glob": "package.json",
+                "input": "./",
+                "output": "/"
+              }
+            ],
+            "styles": [
+              "projects/lazy-element/src/styles.scss"
+            ],
+            "scripts": [
+              "node_modules/@webcomponents/custom-elements/src/native-shim.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/lazy-element/src/environments/environment.ts",
+                  "with": "projects/lazy-element/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "ngx-build-plus:dev-server",
+          "options": {
+            "browserTarget": "lazy-element:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "lazy-element:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "lazy-element:build"
+          }
+        },
+        "test": {
+          "builder": "ngx-build-plus:karma",
+          "options": {
+            "main": "projects/lazy-element/src/test.ts",
+            "polyfills": "projects/lazy-element/src/polyfills.ts",
+            "tsConfig": "projects/lazy-element/tsconfig.spec.json",
+            "karmaConfig": "projects/lazy-element/karma.conf.js",
+            "styles": [
+              "projects/lazy-element/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/lazy-element/src/favicon.ico",
+              "projects/lazy-element/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lazy-element/tsconfig.app.json",
+              "projects/lazy-element/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "lazy-element-e2e": {
+      "root": "projects/lazy-element-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/lazy-element-e2e/protractor.conf.js",
+            "devServerTarget": "lazy-element:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "lazy-element:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/lazy-element-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "demo": {
+      "root": "projects/demo/",
+      "sourceRoot": "projects/demo/src",
+      "projectType": "application",
+      "prefix": "lib",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/demo",
+            "index": "projects/demo/src/index.html",
+            "main": "projects/demo/src/main.ts",
+            "polyfills": "projects/demo/src/polyfills.ts",
+            "tsConfig": "projects/demo/tsconfig.app.json",
+            "assets": [
+              "projects/demo/src/favicon.ico",
+              "projects/demo/src/assets",
+              {
+                "glob": "package.json",
+                "input": "./",
+                "output": "/"
+              }
+            ],
+            "styles": [
+              "projects/demo/src/styles.scss"
+            ],
+            "scripts": [
+              "dist/lazy-element/scripts.c2c15064e2bb2d543c8e.js",
+              "dist/lazy-element/main.169440bf8d8cd17f301b.js"
+            ],
+            "es5BrowserSupport": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/demo/src/environments/environment.ts",
+                  "with": "projects/demo/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "demo:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "demo:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "demo:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/demo/src/test.ts",
+            "polyfills": "projects/demo/src/polyfills.ts",
+            "tsConfig": "projects/demo/tsconfig.spec.json",
+            "karmaConfig": "projects/demo/karma.conf.js",
+            "styles": [
+              "projects/demo/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/demo/src/favicon.ico",
+              "projects/demo/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/demo/tsconfig.app.json",
+              "projects/demo/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "demo-e2e": {
+      "root": "projects/demo-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/demo-e2e/protractor.conf.js",
+            "devServerTarget": "demo:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "demo:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/demo-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "common"
+}
