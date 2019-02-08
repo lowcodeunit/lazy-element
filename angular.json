@@ -7,7 +7,7 @@
       "root": "projects/common",
       "sourceRoot": "projects/common/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "lcu",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -42,7 +42,7 @@
       "root": "projects/lazy-element/",
       "sourceRoot": "projects/lazy-element/src",
       "projectType": "application",
-      "prefix": "lib",
+      "prefix": "lcu",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
@@ -62,7 +62,7 @@
               "projects/lazy-element/src/assets",
               {
                 "glob": "package.json",
-                "input": "./",
+                "input": "./projects/lazy-element",
                 "output": "/"
               }
             ],
@@ -180,7 +180,7 @@
       "root": "projects/demo/",
       "sourceRoot": "projects/demo/src",
       "projectType": "application",
-      "prefix": "lib",
+      "prefix": "lcu",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
@@ -200,7 +200,7 @@
               "projects/demo/src/assets",
               {
                 "glob": "package.json",
-                "input": "./",
+                "input": "./projects/demo",
                 "output": "/"
               }
             ],
@@ -208,8 +208,6 @@
               "projects/demo/src/styles.scss"
             ],
             "scripts": [
-              "dist/lazy-element/scripts.c2c15064e2bb2d543c8e.js",
-              "dist/lazy-element/main.169440bf8d8cd17f301b.js"
             ],
             "es5BrowserSupport": true
           },
