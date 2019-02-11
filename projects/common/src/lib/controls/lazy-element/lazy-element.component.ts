@@ -21,9 +21,18 @@ export class LazyElementComponent implements OnChanges, OnInit {
     return this.el.nativeElement;
   }
 
+  protected localContext: any;
+
   //  Properties
-  @Input('data')
-  public Data: any;
+  @Input('context')
+  public set Context(ctxt: any) {
+    //  TODO: WOuld be ideal if this was only caps...
+    this.localContext = ctxt;
+  }
+
+  public get Context(): any {
+    return this.localContext;
+  }
 
   @Input('config')
   public Config: LazyElementConfig;
@@ -39,7 +48,7 @@ export class LazyElementComponent implements OnChanges, OnInit {
       }
 
       this.establishElement();
-    } else if (_['Data']) {
+    } else if (_['Context']) {
       this.configureElement();
     }
   }
@@ -106,14 +115,14 @@ export class LazyElementComponent implements OnChanges, OnInit {
   }
 
   protected mapElementInputs(el: HTMLElement) {
-    const data = this.transformData();
+    const ctxt = this.transformContext();
 
-    el['data'] = data;
+    el['Context'] = ctxt;
   }
 
   protected mapElementOutputs(el: HTMLElement) {}
 
-  protected transformData() {
-    return this.Data;
+  protected transformContext() {
+    return this.Context;
   }
 }
