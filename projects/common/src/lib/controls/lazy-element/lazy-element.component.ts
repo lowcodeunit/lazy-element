@@ -34,7 +34,7 @@ export class LazyElementComponent implements OnChanges, OnInit {
   //  Life Cycle
   public ngOnChanges(_: SimpleChanges) {
     if (_['Config']) {
-      if (_['Config'].previousValue.ElementName !== _['Config'].currentValue.ElementName) {
+      if (_['Config'].previousValue && _['Config'].previousValue.ElementName !== _['Config'].currentValue.ElementName) {
         this.clearElement(_['Config'].previousValue);
       }
 

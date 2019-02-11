@@ -1,5 +1,5 @@
 {
-  "name": "@fathym-it/lazy-element-demo",
+  "name": "@fathym-it/demo-lazy-element",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^7.2.0",

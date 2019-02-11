@@ -24,12 +24,20 @@ export class AppComponent implements OnInit {
   Data = null;
 
   ngOnInit() {
-    setTimeout(() => {
-      this.Config.Assets = ['assets/flux-module-panel.js'];
+    // setTimeout(() => {
+    //   this.Config.Assets = ['assets/flux-module-panel.js'];
 
-      this.Config.ElementName = 'flux-module-panel';
+    //   this.Config.ElementName = 'flux-module-panel';
 
-      this.Data = { title: 'Working out' };
-    }, 5000);
+    //   this.Data = { title: 'Working out' };
+
+    //   setTimeout(() => {
+        this.Config.Assets = ['assets/lcu-identity.lcu.js'];
+
+        this.Config.ElementName = 'lcu-sign-in';
+
+        this.Data = { title: 'Working out' };
+    //   }, 5000);
+    // }, 5000);
   }
 }
