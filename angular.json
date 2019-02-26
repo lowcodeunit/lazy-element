@@ -208,6 +208,7 @@
               "projects/demo/src/styles.scss"
             ],
             "scripts": [
+              "projects/demo/src/assets/lcu.0.js"
             ],
             "es5BrowserSupport": true
           },

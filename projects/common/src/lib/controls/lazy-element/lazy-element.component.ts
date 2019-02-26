@@ -1,13 +1,12 @@
-import { Component, OnInit, ViewEncapsulation, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ElementRef, Input, OnChanges, SimpleChanges, AfterViewChecked } from '@angular/core';
 import { LazyElementConfig } from '../../core/lazy-element-config';
 
 @Component({
   selector: 'lcu-lazy-element',
   templateUrl: './lazy-element.component.html',
-  styleUrls: ['./lazy-element.component.scss'],
-  encapsulation: ViewEncapsulation.ShadowDom
+  styleUrls: ['./lazy-element.component.scss']
 })
-export class LazyElementComponent implements OnChanges, OnInit {
+export class LazyElementComponent implements AfterViewChecked, OnChanges, OnInit {
   //  Fields
   protected get headScripts(): HTMLScriptElement[] {
     return [].slice.call(document.querySelectorAll('script'));
@@ -21,18 +20,9 @@ export class LazyElementComponent implements OnChanges, OnInit {
     return this.el.nativeElement;
   }
 
-  protected localContext: any;
-
   //  Properties
   @Input('context')
-  public set Context(ctxt: any) {
-    //  TODO: WOuld be ideal if this was only caps...
-    this.localContext = ctxt;
-  }
-
-  public get Context(): any {
-    return this.localContext;
-  }
+  public Context: any;
 
   @Input('config')
   public Config: LazyElementConfig;
@@ -41,6 +31,8 @@ export class LazyElementComponent implements OnChanges, OnInit {
   constructor(protected el: ElementRef) {}
 
   //  Life Cycle
+  public ngAfterViewChecked() {}
+
   public ngOnChanges(_: SimpleChanges) {
     if (_['Config']) {
       if (_['Config'].previousValue && _['Config'].previousValue.ElementName !== _['Config'].currentValue.ElementName) {
@@ -49,7 +41,9 @@ export class LazyElementComponent implements OnChanges, OnInit {
 
       this.establishElement();
     } else if (_['Context']) {
-      this.configureElement();
+      setTimeout(() => {
+        this.configureElement();
+      }, 1000);
     }
   }
 
@@ -65,11 +59,14 @@ export class LazyElementComponent implements OnChanges, OnInit {
   }
 
   protected configureElement() {
+    console.log('Configuring element');
+    console.log(this.Context);
+
     const el = this.ensureDomElement();
 
-    this.ensureElementConfigured(el);
-
     console.log(el);
+
+    this.ensureElementConfigured(el);
   }
 
   protected ensureScript(scripts: HTMLScriptElement[], asset: string, elName: string) {
@@ -92,7 +89,9 @@ export class LazyElementComponent implements OnChanges, OnInit {
 
       this.Config.Assets.forEach(asset => this.ensureScript(scripts, asset, this.Config.ElementName));
 
-      this.configureElement();
+      setTimeout(() => {
+        this.configureElement();
+      }, 1000);
     }
   }
 
@@ -109,15 +108,25 @@ export class LazyElementComponent implements OnChanges, OnInit {
   }
 
   protected ensureElementConfigured(el: HTMLElement) {
+    console.log(el);
+
     this.mapElementInputs(el);
 
     this.mapElementOutputs(el);
   }
 
   protected mapElementInputs(el: HTMLElement) {
-    const ctxt = this.transformContext();
+    console.log(el);
 
-    el['Context'] = ctxt;
+    if (el['SetContext']) {
+      const ctxt = this.transformContext();
+
+      el['SetContext'](ctxt);
+
+      console.log('Context set');
+    } else {
+      console.log('Context NOT set');
+    }
   }
 
   protected mapElementOutputs(el: HTMLElement) {}
