@@ -59,12 +59,7 @@ export class LazyElementComponent implements AfterViewChecked, OnChanges, OnInit
   }
 
   protected configureElement() {
-    console.log('Configuring element');
-    console.log(this.Context);
-
     const el = this.ensureDomElement();
-
-    console.log(el);
 
     this.ensureElementConfigured(el);
   }
@@ -102,6 +97,8 @@ export class LazyElementComponent implements AfterViewChecked, OnChanges, OnInit
       el = document.createElement(this.Config.ElementName);
 
       this.native.appendChild(el);
+
+      el.innerHTML = `<mat-progress-bar _ngcontent-c10="" aria-valuemax="100" aria-valuemin="0" class="mat-progress-bar mat-primary" mode="indeterminate" role="progressbar" ng-reflect-mode="indeterminate" aria-valuenow="0"><svg class="mat-progress-bar-background mat-progress-bar-element" focusable="false" height="4" width="100%"><defs><pattern height="4" patternUnits="userSpaceOnUse" width="8" x="4" y="0" id="mat-progress-bar-0"><circle cx="2" cy="2" r="2"></circle></pattern></defs><rect height="100%" width="100%" fill="url('/forge#mat-progress-bar-0')"></rect></svg><div class="mat-progress-bar-buffer mat-progress-bar-element"></div><div class="mat-progress-bar-primary mat-progress-bar-fill mat-progress-bar-element" ng-reflect-ng-style="[object Object]" style="transform: scaleX(0);"></div><div class="mat-progress-bar-secondary mat-progress-bar-fill mat-progress-bar-element"></div></mat-progress-bar>`;
     }
 
     return el;
