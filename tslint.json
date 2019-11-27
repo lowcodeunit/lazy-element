@@ -29,6 +29,7 @@
     "no-var-requires": false,
     "object-literal-key-quotes": [true, "as-needed"],
     "object-literal-sort-keys": false,
+    "no-angle-bracket-type-assertion": false,
     "no-string-literal": false,
     "ordered-imports": false,
     "quotemark": [true, "single"],

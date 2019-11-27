@@ -14,30 +14,54 @@ declare global {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  public Contexts: any[];
+
   title = 'demo';
 
   Config: LazyElementConfig = {
-    Assets: ['assets/lazy-element-x.js'],
-    ElementName: 'lcu-lazy-element-x'
+    Assets: ['assets/lcu-state.lcu.js'],
+    ElementName: 'lcu-state-config-manager-element'
   };
 
-  Data = null;
+  Context = null;
+
+  constructor() {
+    this.Contexts = [];
+  }
 
   ngOnInit() {
     // setTimeout(() => {
-    //   this.Config.Assets = ['assets/flux-module-panel.js'];
+    // this.Config.Assets = ['assets/lazy-element-x.js'];
 
-    //   this.Config.ElementName = 'flux-module-panel';
+    // this.Config.ElementName = 'lcu-lazy-element-x';
 
-    //   this.Data = { title: 'Working out' };
+    // this.Data = { title: 'Working out' };
 
     //   setTimeout(() => {
-        this.Config.Assets = ['assets/lcu-identity.lcu.js'];
-
-        this.Config.ElementName = 'lcu-sign-in';
-
-        this.Data = { title: 'Working out' };
     //   }, 5000);
     // }, 5000);
+
+    // this.Contexts.push({
+    //   State: {
+    //     Content: 'Hello World',
+    //     Type: 'h1',
+    //     Class: 'this-world'
+    //   }
+    // });
+
+    // this.Contexts.push({
+    //   State: {
+    //     Content: 'http://fathym.com',
+    //     Type: 'iframe',
+    //     Class: 'that-world',
+    //     Modifier: `frameborder="0"`
+    //   }
+    // });
+
+    // this.Config.Assets = ['assets/lcu-applications.lcu.js'];
+
+    // this.Config.ElementName = 'lcu-content-element';
+
+    // this.Context = this.Contexts[0];
   }
 }
