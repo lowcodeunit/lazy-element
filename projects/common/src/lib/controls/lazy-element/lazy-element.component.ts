@@ -1,4 +1,13 @@
-import { Component, OnInit, ViewEncapsulation, ElementRef, Input, OnChanges, SimpleChanges, AfterViewChecked } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  ElementRef,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  AfterViewChecked
+} from '@angular/core';
 import { LazyElementConfig } from '../../core/lazy-element-config';
 
 @Component({
@@ -6,7 +15,8 @@ import { LazyElementConfig } from '../../core/lazy-element-config';
   templateUrl: './lazy-element.component.html',
   styleUrls: ['./lazy-element.component.scss']
 })
-export class LazyElementComponent implements AfterViewChecked, OnChanges, OnInit {
+export class LazyElementComponent
+  implements AfterViewChecked, OnChanges, OnInit {
   //  Fields
   protected get headScripts(): HTMLScriptElement[] {
     return [].slice.call(document.querySelectorAll('script'));
@@ -21,11 +31,11 @@ export class LazyElementComponent implements AfterViewChecked, OnChanges, OnInit
   }
 
   //  Properties
-  @Input('context')
-  public Context: any;
-
   @Input('config')
   public Config: LazyElementConfig;
+
+  @Input('context')
+  public Context: any;
 
   //  Constructors
   constructor(protected el: ElementRef) {}
@@ -35,7 +45,11 @@ export class LazyElementComponent implements AfterViewChecked, OnChanges, OnInit
 
   public ngOnChanges(_: SimpleChanges) {
     if (_['Config']) {
-      if (_['Config'].previousValue && _['Config'].previousValue.ElementName !== _['Config'].currentValue.ElementName) {
+      if (
+        _['Config'].previousValue &&
+        _['Config'].previousValue.ElementName !==
+          _['Config'].currentValue.ElementName
+      ) {
         this.clearElement(_['Config'].previousValue);
       }
 
@@ -51,7 +65,9 @@ export class LazyElementComponent implements AfterViewChecked, OnChanges, OnInit
 
   //  Helpers
   protected clearElement(prevConfig: LazyElementConfig) {
-    const els = this.childEls.filter(cn => cn.nodeName === this.Config.ElementName.toUpperCase());
+    const els = this.childEls.filter(
+      cn => cn.nodeName === this.Config.ElementName.toUpperCase()
+    );
 
     if (els) {
       els.forEach(el => this.native.removeChild(el));
@@ -64,8 +80,14 @@ export class LazyElementComponent implements AfterViewChecked, OnChanges, OnInit
     this.ensureElementConfigured(el);
   }
 
-  protected ensureScript(scripts: HTMLScriptElement[], asset: string, elName: string) {
-    let script = scripts.find(sc => sc.getAttributeNode('src').nodeValue === asset && sc.className === elName);
+  protected ensureScript(
+    scripts: HTMLScriptElement[],
+    asset: string,
+    elName: string
+  ) {
+    let script = scripts.find(
+      sc => sc.getAttributeNode('src').nodeValue === asset
+    ); // && sc.className === elName);
 
     if (!script) {
       script = document.createElement('script');
@@ -80,9 +102,13 @@ export class LazyElementComponent implements AfterViewChecked, OnChanges, OnInit
 
   protected establishElement() {
     if (this.Config) {
-      const scripts = this.headScripts.filter(cn => cn.className === this.Config.ElementName);
+      const scripts = this.headScripts.filter(
+        cn => cn.className === this.Config.ElementName
+      );
 
-      this.Config.Assets.forEach(asset => this.ensureScript(scripts, asset, this.Config.ElementName));
+      this.Config.Assets.forEach(asset =>
+        this.ensureScript(scripts, asset, this.Config.ElementName)
+      );
 
       setTimeout(() => {
         this.configureElement();
@@ -91,7 +117,9 @@ export class LazyElementComponent implements AfterViewChecked, OnChanges, OnInit
   }
 
   protected ensureDomElement() {
-    let el = this.childEls.find(cn => cn.nodeName === this.Config.ElementName.toUpperCase());
+    let el = this.childEls.find(
+      cn => cn.nodeName === this.Config.ElementName.toUpperCase()
+    );
 
     if (!el) {
       el = document.createElement(this.Config.ElementName);
