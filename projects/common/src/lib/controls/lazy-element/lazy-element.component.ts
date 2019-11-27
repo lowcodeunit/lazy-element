@@ -102,12 +102,12 @@ export class LazyElementComponent
 
   protected establishElement() {
     if (this.Config) {
-      const scripts = this.headScripts.filter(
-        cn => cn.className === this.Config.ElementName
-      );
+      // const scripts = this.headScripts.filter(
+      //   cn => cn.className === this.Config.ElementName
+      // );
 
       this.Config.Assets.forEach(asset =>
-        this.ensureScript(scripts, asset, this.Config.ElementName)
+        this.ensureScript(this.headScripts, asset, this.Config.ElementName)
       );
 
       setTimeout(() => {
