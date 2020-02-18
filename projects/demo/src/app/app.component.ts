@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     ElementName: 'lcu-state-config-manager-element'
   };
 
-  Context = null;
+  // Context = null;
 
   constructor() {
     this.Contexts = [];
