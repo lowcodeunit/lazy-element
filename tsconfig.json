@@ -26,5 +26,11 @@
         "dist/common/*"
       ]
     }
-  }
+  },
+  "angularCompilerOptions": {
+		"fullTemplateTypeCheck": false,
+		"strictInjectionParameters": false,
+		"enableIvy": false,
+		"strictTemplates": false
+	}
 }
