@@ -1,6 +1,6 @@
 {
   "name": "@fathym-it/demo-lazy-element",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "peerDependencies": {
     "@angular/common": "^10.0.8",
     "@angular/core": "^10.0.8"
