@@ -85,9 +85,11 @@ export class LazyElementComponent
     asset: string,
     elName: string
   ) {
-    let script = scripts.find(
-      sc => sc.getAttributeNode('src').nodeValue === asset
-    ); // && sc.className === elName);
+    let script = scripts.find(sc => {
+      const srcAttr = sc.getAttributeNode('src');
+
+      return srcAttr && srcAttr.nodeValue === asset;
+    }); // && sc.className === elName);
 
     if (!script) {
       script = document.createElement('script');

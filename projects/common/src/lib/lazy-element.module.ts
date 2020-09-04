@@ -10,7 +10,7 @@ import { PushPipe } from './pipes/push-pipe';
   entryComponents: [LazyElementComponent]
 })
 export class LazyElementModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<LazyElementModule> {
     return {
       ngModule: LazyElementModule,
       providers: [PushPipe]
