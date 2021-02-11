@@ -7,13 +7,13 @@ import {
   OnChanges,
   SimpleChanges,
   AfterViewChecked,
-} from "@angular/core";
-import { LazyElementConfig } from "../../core/lazy-element-config";
+} from '@angular/core';
+import { LazyElementConfig } from '../../core/lazy-element-config';
 
 @Component({
-  selector: "lcu-lazy-element",
-  templateUrl: "./lazy-element.component.html",
-  styleUrls: ["./lazy-element.component.scss"],
+  selector: 'lcu-lazy-element',
+  templateUrl: './lazy-element.component.html',
+  styleUrls: ['./lazy-element.component.scss'],
 })
 export class LazyElementComponent
   implements AfterViewChecked, OnChanges, OnInit {
@@ -23,11 +23,11 @@ export class LazyElementComponent
   }
 
   protected get headScripts(): HTMLScriptElement[] {
-    return [].slice.call(document.querySelectorAll("script"));
+    return [].slice.call(document.querySelectorAll('script'));
   }
 
   protected get headStyles(): HTMLLinkElement[] {
-    return [].slice.call(document.querySelectorAll("link"));
+    return [].slice.call(document.querySelectorAll('link'));
   }
 
   protected get native(): HTMLElement {
@@ -35,10 +35,10 @@ export class LazyElementComponent
   }
 
   //  Properties
-  @Input("config")
+  @Input('config')
   public Config: LazyElementConfig;
 
-  @Input("context")
+  @Input('context')
   public Context: any;
 
   //  Constructors
@@ -48,17 +48,17 @@ export class LazyElementComponent
   public ngAfterViewChecked() {}
 
   public ngOnChanges(_: SimpleChanges) {
-    if (_["Config"]) {
+    if (_['Config']) {
       if (
-        _["Config"].previousValue &&
-        _["Config"].previousValue.ElementName !==
-          _["Config"].currentValue.ElementName
+        _['Config'].previousValue &&
+        _['Config'].previousValue.ElementName !==
+          _['Config'].currentValue.ElementName
       ) {
-        this.clearElement(_["Config"].previousValue);
+        this.clearElement(_['Config'].previousValue);
       }
 
       this.establishElement();
-    } else if (_["Context"]) {
+    } else if (_['Context']) {
       setTimeout(() => {
         this.configureElement();
       }, 1000);
@@ -90,19 +90,19 @@ export class LazyElementComponent
     elName: string
   ) {
     let script = scripts.find((sc) => {
-      const srcAttr = sc.getAttributeNode("src");
+      const srcAttr = sc.getAttributeNode('src');
 
       return srcAttr && srcAttr.nodeValue === asset;
     }); // && sc.className === elName);
 
     if (!script) {
-      script = document.createElement("script");
+      script = document.createElement('script');
 
       script.src = asset;
 
       script.className = elName;
 
-      document.getElementsByTagName("head")[0].appendChild(script);
+      document.getElementsByTagName('head')[0].appendChild(script);
     }
   }
 
@@ -112,21 +112,21 @@ export class LazyElementComponent
     elName: string
   ) {
     let style = styles.find((st) => {
-      const hrefAttr = st.getAttributeNode("href");
+      const hrefAttr = st.getAttributeNode('href');
 
       return hrefAttr && hrefAttr.nodeValue === asset;
     }); // && sc.className === elName);
 
     if (!style) {
-      style = document.createElement("link");
+      style = document.createElement('link');
 
       style.href = asset;
 
-      style.rel = "stylesheet";
+      style.rel = 'stylesheet';
 
       style.className = elName;
 
-      document.getElementsByTagName("head")[0].appendChild(style);
+      document.getElementsByTagName('head')[0].appendChild(style);
     }
   }
 
@@ -179,14 +179,14 @@ export class LazyElementComponent
   protected mapElementInputs(el: HTMLElement) {
     console.log(el);
 
-    if (el["SetContext"]) {
+    if (el['SetContext']) {
       const ctxt = this.transformContext();
 
-      el["SetContext"](ctxt);
+      el['SetContext'](ctxt);
 
-      console.log("Context set");
+      console.log('Context set');
     } else {
-      console.log("Context NOT set");
+      console.log('Context NOT set');
     }
   }
 
