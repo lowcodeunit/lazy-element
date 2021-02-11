@@ -6,24 +6,28 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
-  AfterViewChecked
+  AfterViewChecked,
 } from '@angular/core';
 import { LazyElementConfig } from '../../core/lazy-element-config';
 
 @Component({
   selector: 'lcu-lazy-element',
   templateUrl: './lazy-element.component.html',
-  styleUrls: ['./lazy-element.component.scss']
+  styleUrls: ['./lazy-element.component.scss'],
 })
 export class LazyElementComponent
   implements AfterViewChecked, OnChanges, OnInit {
   //  Fields
+  protected get childEls(): HTMLElement[] {
+    return [].slice.call(this.native.children);
+  }
+
   protected get headScripts(): HTMLScriptElement[] {
     return [].slice.call(document.querySelectorAll('script'));
   }
 
-  protected get childEls(): HTMLElement[] {
-    return [].slice.call(this.native.children);
+  protected get headStyles(): HTMLLinkElement[] {
+    return [].slice.call(document.querySelectorAll('link'));
   }
 
   protected get native(): HTMLElement {
@@ -66,11 +70,11 @@ export class LazyElementComponent
   //  Helpers
   protected clearElement(prevConfig: LazyElementConfig) {
     const els = this.childEls.filter(
-      cn => cn.nodeName === this.Config.ElementName.toUpperCase()
+      (cn) => cn.nodeName === this.Config.ElementName.toUpperCase()
     );
 
     if (els) {
-      els.forEach(el => this.native.removeChild(el));
+      els.forEach((el) => this.native.removeChild(el));
     }
   }
 
@@ -85,7 +89,7 @@ export class LazyElementComponent
     asset: string,
     elName: string
   ) {
-    let script = scripts.find(sc => {
+    let script = scripts.find((sc) => {
       const srcAttr = sc.getAttributeNode('src');
 
       return srcAttr && srcAttr.nodeValue === asset;
@@ -102,14 +106,42 @@ export class LazyElementComponent
     }
   }
 
+  protected ensureStyle(
+    styles: HTMLLinkElement[],
+    asset: string,
+    elName: string
+  ) {
+    let style = styles.find((st) => {
+      const hrefAttr = st.getAttributeNode('href');
+
+      return hrefAttr && hrefAttr.nodeValue === asset;
+    }); // && sc.className === elName);
+
+    if (!style) {
+      style = document.createElement('link');
+
+      style.href = asset;
+
+      style.rel = 'stylesheet';
+
+      style.className = elName;
+
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+  }
+
   protected establishElement() {
     if (this.Config) {
       // const scripts = this.headScripts.filter(
       //   cn => cn.className === this.Config.ElementName
       // );
 
-      this.Config.Assets.forEach(asset =>
+      this.Config?.Scripts?.forEach((asset) =>
         this.ensureScript(this.headScripts, asset, this.Config.ElementName)
+      );
+
+      this.Config?.Styles?.forEach((asset) =>
+        this.ensureStyle(this.headStyles, asset, this.Config.ElementName)
       );
 
       setTimeout(() => {
@@ -120,7 +152,7 @@ export class LazyElementComponent
 
   protected ensureDomElement() {
     let el = this.childEls.find(
-      cn => cn.nodeName === this.Config.ElementName.toUpperCase()
+      (cn) => cn.nodeName === this.Config.ElementName.toUpperCase()
     );
 
     if (!el) {
