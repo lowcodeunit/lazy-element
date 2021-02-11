@@ -1,11 +1,5 @@
 export class LazyElementConfig {
-  public get Assets(): string[] {
-    return this.Scripts;
-  }
-
-  public set Assets(scripts: string[]) {
-    this.Scripts = scripts;
-  }
+  public Assets: string[];
 
   public ElementName: string;
 
