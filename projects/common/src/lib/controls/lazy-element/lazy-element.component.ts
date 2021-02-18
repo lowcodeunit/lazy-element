@@ -183,7 +183,7 @@ export class LazyElementComponent
 
     const ctxt = this.transformContext();
 
-    if (el['SetContext']) {
+    if (el['SetContext'] && ctxt !== undefined) {
       el['SetContext'](ctxt);
 
       console.log('Context set');
