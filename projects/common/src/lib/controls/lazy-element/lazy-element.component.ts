@@ -153,6 +153,8 @@ export class LazyElementComponent
   }
 
   protected ensureDomElement() {
+    //  TODO:  How to allow content projection to show until js is loaded?
+
     let el = this.childEls.find(
       (cn) => cn.nodeName === this.Config.ElementName.toUpperCase()
     );
@@ -179,9 +181,9 @@ export class LazyElementComponent
   protected mapElementInputs(el: HTMLElement) {
     console.log(el);
 
-    if (el['SetContext']) {
-      const ctxt = this.transformContext();
+    const ctxt = this.transformContext();
 
+    if (el['SetContext']) {
       el['SetContext'](ctxt);
 
       console.log('Context set');
