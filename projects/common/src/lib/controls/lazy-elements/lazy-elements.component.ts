@@ -5,23 +5,23 @@ import {
   Input,
   OnChanges,
   OnInit,
-} from "@angular/core";
-import { LCUServiceSettings } from "@lcu/common";
-import { LazyElementConfig } from "../../core/lazy-element-config";
+} from '@angular/core';
+import { LCUServiceSettings } from '@lcu/common';
+import { LazyElementConfig } from '../../core/lazy-element-config';
 
 @Component({
-  selector: "lcu-lazy-elements",
-  templateUrl: "./lazy-elements.component.html",
-  styleUrls: ["./lazy-elements.component.scss"],
+  selector: 'lcu-lazy-elements',
+  templateUrl: './lazy-elements.component.html',
+  styleUrls: ['./lazy-elements.component.scss'],
 })
 export class LazyElementsComponent implements OnChanges, OnInit {
   //  Fields
 
   //  Properties
-  @Input("configs")
+  @Input('configs')
   public Configs: { [key: string]: LazyElementConfig };
 
-  @Input("elements")
+  @Input('elements')
   public Elements: { [elCfg: string]: string };
 
   public Names: string[];
