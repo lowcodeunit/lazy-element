@@ -6,6 +6,7 @@ import {
   OnChanges,
   OnInit,
 } from '@angular/core';
+import { LCUServiceSettings } from '@lcu/common';
 import { LazyElementConfig } from '../../core/lazy-element-config';
 
 @Component({
@@ -20,11 +21,16 @@ export class LazyElementsComponent implements OnChanges, OnInit {
   @Input('configs')
   public Configs: { [key: string]: LazyElementConfig };
 
-  @Input('names')
+  @Input('elements')
+  public Elements: { [elCfg: string]: string };
+
   public Names: string[];
 
   //  Constructors
-  constructor(protected injector: Injector) {}
+  constructor(
+    protected injector: Injector,
+    protected settings: LCUServiceSettings
+  ) {}
 
   //  Life Cycle
   public ngOnChanges() {
@@ -36,9 +42,16 @@ export class LazyElementsComponent implements OnChanges, OnInit {
   }
 
   //  API Methods
+  public LoadContext(name: string) {
+    const stateKey = this.Elements[name];
+
+    return this.settings.State[stateKey];
+  }
 
   //  Helpers
   protected ensureNames() {
+    this.Names = Object.keys(this.Elements || {});
+
     if (!(this.Names?.length > 0)) {
       this.Names = Object.keys(this.Configs || {});
     }
