@@ -7,3 +7,9 @@ export class LazyElementConfig {
 
   public Styles?: string[];
 }
+
+export class LazyElementToken {
+  public Name: string;
+
+  public StateKey?: string;
+}

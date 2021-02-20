@@ -7,7 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { LCUServiceSettings } from '@lcu/common';
-import { LazyElementConfig } from '../../core/lazy-element-config';
+import { LazyElementConfig, LazyElementToken } from '../../core/lazy-element-config';
 
 @Component({
   selector: 'lcu-lazy-elements',
@@ -22,7 +22,7 @@ export class LazyElementsComponent implements OnChanges, OnInit {
   public Configs: { [key: string]: LazyElementConfig };
 
   @Input('elements')
-  public Elements: { [elCfg: string]: string };
+  public Elements: LazyElementToken[];
 
   public Names: string[];
 
@@ -43,14 +43,14 @@ export class LazyElementsComponent implements OnChanges, OnInit {
 
   //  API Methods
   public LoadContext(name: string) {
-    const stateKey = this.Elements[name];
+    const stateKey = this.Elements?.find(el => el.Name === name)?.Name;
 
     return stateKey ? this.settings.State[stateKey] : null;
   }
 
   //  Helpers
   protected ensureNames() {
-    this.Names = Object.keys(this.Elements || {});
+    this.Names = this.Elements?.map(el => el.Name) || [];
 
     if (!(this.Names?.length > 0)) {
       this.Names = Object.keys(this.Configs || {});
