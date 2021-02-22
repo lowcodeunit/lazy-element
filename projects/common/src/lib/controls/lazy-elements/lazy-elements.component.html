@@ -1,7 +1,5 @@
 <ng-container *ngFor="let elCfgName of Names">
-    {{ Configs | json }}
-    <ng-container *ngIf="Configs[elCfgName]; let cfg">
-    {{ cfg | json }}
+  <ng-container *ngIf="Configs[elCfgName]; let cfg">
     <lcu-lazy-element [config]="cfg" [context]="Contexts[elCfgName]">
       <ng-content></ng-content>
     </lcu-lazy-element>
