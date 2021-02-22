@@ -28,21 +28,32 @@ export class AppComponent implements OnInit {
   ElementConfigs = {
     'lcu-device-data-flow-manage-element': {
       Scripts: [
-        // "/assets/lcu-device-data-flow.lcu.js",
         'https://www.iot-ensemble.com/_lcu/lcu-device-data-flow-lcu/wc/lcu-device-data-flow.lcu.js',
       ],
       Styles: [
-        // "/assets/lcu-device-data-flow.lcu.css",
         'https://www.iot-ensemble.com/_lcu/lcu-device-data-flow-lcu/wc/lcu-device-data-flow.lcu.css',
       ],
       ElementName: 'lcu-device-data-flow-manage-element',
-    }
+    },
+    'landing-pages-blocks-element': {
+      Scripts: [
+        'https://www.iot-ensemble.com/_lcu/lcu-landing-pages-lcu/wc/landing-pages.lcu.js',
+      ],
+      Styles: [
+        'https://www.iot-ensemble.com/_lcu/lcu-landing-pages-lcu/wc/landing-pages.lcu.css',
+      ],
+      ElementName: 'landing-pages-home-page-element',
+    },
   };
 
   public ElementTokens: LazyElementToken[] = [
+    // {
+    //   Name: 'lcu-device-data-flow-manage-element',
+    //   StateKey: null,
+    // },
     {
-      Name: 'lcu-device-data-flow-manage-element',
-      StateKey: null,
+      Name: 'landing-pages-blocks-element',
+      StateKey: 'LandingPages.Blocks',
     },
   ];
 

@@ -184,9 +184,13 @@ export class LazyElementComponent
     if (el['SetContext'] && ctxt !== undefined) {
       el['SetContext'](ctxt);
 
-      console.log('Context set');
+      console.log('Context set with set method');
 
       console.log(ctxt);
+    } else if (ctxt !== undefined) {
+      el['Context'] = ctxt;
+
+      console.log('Context set');
     } else {
       console.log('Context NOT set');
     }
