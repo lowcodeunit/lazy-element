@@ -1,5 +1,14 @@
-<lcu-lazy-element [config]="Config" [context]="Context"></lcu-lazy-element>
+<!-- <lcu-lazy-element [config]="Config" [context]="Context"></lcu-lazy-element>
 
-<ng-container *ngFor="let context of Contexts">
-  <lcu-content-element [context]="context"></lcu-content-element>
-</ng-container>
+<div>
+  <ng-container *ngFor="let context of Contexts">
+    <lcu-content-element [context]="context"></lcu-content-element>
+  </ng-container>
+</div> -->
+
+<div>
+  <lcu-lazy-elements
+    [elements]="ElementTokens"
+    [configs]="ElementConfigs"
+  ></lcu-lazy-elements>
+</div>

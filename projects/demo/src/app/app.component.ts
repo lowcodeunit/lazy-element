@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { LazyElementConfig } from '@lowcodeunit/lazy-element';
+import { LazyElementConfig, LazyElementToken } from '@lowcodeunit/lazy-element';
 import { NgElement, WithProperties } from '@angular/elements';
 
 declare global {
@@ -11,7 +11,7 @@ declare global {
 @Component({
   selector: 'lib-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   public Contexts: any[];
@@ -20,10 +20,31 @@ export class AppComponent implements OnInit {
 
   Config: LazyElementConfig = {
     Assets: ['assets/lcu-state.lcu.js'],
-    ElementName: 'lcu-state-config-manager-element'
+    ElementName: 'lcu-state-config-manager-element',
   };
 
   Context = null;
+
+  ElementConfigs = {
+    'lcu-device-data-flow-manage-element': {
+      Scripts: [
+        // "/assets/lcu-device-data-flow.lcu.js",
+        'https://www.iot-ensemble.com/_lcu/lcu-device-data-flow-lcu/wc/lcu-device-data-flow.lcu.js',
+      ],
+      Styles: [
+        // "/assets/lcu-device-data-flow.lcu.css",
+        'https://www.iot-ensemble.com/_lcu/lcu-device-data-flow-lcu/wc/lcu-device-data-flow.lcu.css',
+      ],
+      ElementName: 'lcu-device-data-flow-manage-element',
+    }
+  };
+
+  public ElementTokens: LazyElementToken[] = [
+    {
+      Name: 'lcu-device-data-flow-manage-element',
+      StateKey: null,
+    },
+  ];
 
   constructor() {
     this.Contexts = [];
@@ -32,15 +53,11 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // setTimeout(() => {
     // this.Config.Assets = ['assets/lazy-element-x.js'];
-
     // this.Config.ElementName = 'lcu-lazy-element-x';
-
     // this.Data = { title: 'Working out' };
-
     //   setTimeout(() => {
     //   }, 5000);
     // }, 5000);
-
     // this.Contexts.push({
     //   State: {
     //     Content: 'Hello World',
@@ -48,7 +65,6 @@ export class AppComponent implements OnInit {
     //     Class: 'this-world'
     //   }
     // });
-
     // this.Contexts.push({
     //   State: {
     //     Content: 'http://fathym.com',
@@ -57,11 +73,8 @@ export class AppComponent implements OnInit {
     //     Modifier: `frameborder="0"`
     //   }
     // });
-
     // this.Config.Assets = ['assets/lcu-applications.lcu.js'];
-
     // this.Config.ElementName = 'lcu-content-element';
-
     // this.Context = this.Contexts[0];
   }
 }
