@@ -59,6 +59,9 @@ export class LazyElementsComponent implements OnChanges, OnInit {
     this.Names?.forEach((name) => {
       this.Contexts[name] = this.loadContext(name);
     });
+
+    console.log('Lazy elements contexts:')
+    console.log(this.Contexts);
   }
 
   protected ensureNames() {
@@ -67,6 +70,9 @@ export class LazyElementsComponent implements OnChanges, OnInit {
     if (!(this.Names?.length > 0)) {
       this.Names = Object.keys(this.Configs || {});
     }
+
+    console.log('Lazy elements names:')
+    console.log(this.Names);
   }
 
   public loadContext(name: string) {

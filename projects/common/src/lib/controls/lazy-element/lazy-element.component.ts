@@ -191,6 +191,8 @@ export class LazyElementComponent
       el['Context'] = ctxt;
 
       console.log('Context set');
+
+      console.log(ctxt);
     } else {
       console.log('Context NOT set');
     }
