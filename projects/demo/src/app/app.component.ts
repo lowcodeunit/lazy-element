@@ -47,14 +47,14 @@ export class AppComponent implements OnInit {
   };
 
   public ElementTokens: LazyElementToken[] = [
-    // {
-    //   Name: 'lcu-device-data-flow-manage-element',
-    //   StateKey: null,
-    // },
     {
-      Name: 'landing-pages-blocks-element',
-      StateKey: 'LandingPages.Blocks',
+      Name: 'lcu-device-data-flow-manage-element',
+      StateKey: null,
     },
+    // {
+    //   Name: 'landing-pages-blocks-element',
+    //   StateKey: 'LandingPages.Blocks',
+    // },
   ];
 
   constructor() {

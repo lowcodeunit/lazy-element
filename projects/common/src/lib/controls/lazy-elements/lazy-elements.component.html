@@ -1,9 +1,7 @@
 <ng-container *ngFor="let elCfgName of Names">
   <ng-container *ngIf="Configs[elCfgName]; let cfg">
-    <ng-container *ngIf="Contexts[elCfgName]; let ctxt">
-      <lcu-lazy-element [config]="cfg" [context]="ctxt">
-        <ng-content></ng-content>
-      </lcu-lazy-element>
-    </ng-container>
+    <lcu-lazy-element [config]="cfg" [context]="Contexts[elCfgName]">
+      <ng-content></ng-content>
+    </lcu-lazy-element>
   </ng-container>
 </ng-container>
