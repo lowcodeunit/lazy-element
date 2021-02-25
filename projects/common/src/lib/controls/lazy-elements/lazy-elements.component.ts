@@ -67,9 +67,9 @@ export class LazyElementsComponent implements OnChanges, OnInit {
   protected ensureNames() {
     this.Names = this.Elements?.map((el) => el.Name) || [];
 
-    if (!(this.Names?.length > 0)) {
-      this.Names = Object.keys(this.Configs || {});
-    }
+    // if (!(this.Names?.length > 0)) {
+    //   this.Names = Object.keys(this.Configs || {});
+    // }
 
     console.log('Lazy elements names:')
     console.log(this.Names);
