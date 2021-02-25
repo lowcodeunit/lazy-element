@@ -78,6 +78,6 @@ export class LazyElementsComponent implements OnChanges, OnInit {
   public loadContext(name: string) {
     const stateKey = this.Elements?.find((el) => el.Name === name)?.StateKey;
 
-    return stateKey ? this.settings.State[stateKey] : null;
+    return stateKey && this.settings.State ? this.settings.State[stateKey] : null;
   }
 }
