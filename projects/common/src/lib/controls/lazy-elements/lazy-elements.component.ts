@@ -21,6 +21,8 @@ export class LazyElementsComponent implements OnChanges, OnInit {
   //  Fields
 
   //  Properties
+  public Actions: { [key: string]: { [event: string]: Function } };
+
   public Contexts: { [key: string]: any };
 
   @Input('configs')
@@ -42,17 +44,32 @@ export class LazyElementsComponent implements OnChanges, OnInit {
     this.ensureNames();
 
     this.ensureContexts();
+
+    this.ensureActions();
   }
 
   public ngOnInit() {
     this.ensureNames();
 
     this.ensureContexts();
+
+    this.ensureActions();
   }
 
   //  API Methods
 
   //  Helpers
+  protected ensureActions() {
+    this.Actions = {};
+
+    this.Names?.forEach((name) => {
+      this.Actions[name] = this.loadActions(name);
+    });
+
+    console.log('Lazy elements actions:');
+    console.log(this.Actions);
+  }
+
   protected ensureContexts() {
     this.Contexts = {};
 
@@ -60,7 +77,7 @@ export class LazyElementsComponent implements OnChanges, OnInit {
       this.Contexts[name] = this.loadContext(name);
     });
 
-    console.log('Lazy elements contexts:')
+    console.log('Lazy elements contexts:');
     console.log(this.Contexts);
   }
 
@@ -71,13 +88,30 @@ export class LazyElementsComponent implements OnChanges, OnInit {
     //   this.Names = Object.keys(this.Configs || {});
     // }
 
-    console.log('Lazy elements names:')
+    console.log('Lazy elements names:');
     console.log(this.Names);
+  }
+
+  public loadActions(name: string) {
+    const actionKeys = this.Elements?.find((el) => el.Name === name)
+      ?.ActionKeys;
+
+    const actions = {};
+
+    Object.keys(actionKeys || {}).forEach((actKey) => {
+      actions[actKey] = this.settings.Actions
+        ? this.settings.Actions[actionKeys[actKey]]
+        : null;
+    });
+
+    return actions;
   }
 
   public loadContext(name: string) {
     const stateKey = this.Elements?.find((el) => el.Name === name)?.StateKey;
 
-    return stateKey && this.settings.State ? this.settings.State[stateKey] : null;
+    return stateKey && this.settings.State
+      ? this.settings.State[stateKey]
+      : null;
   }
 }

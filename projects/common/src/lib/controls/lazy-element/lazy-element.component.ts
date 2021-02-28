@@ -7,6 +7,7 @@ import {
   OnChanges,
   SimpleChanges,
   AfterViewChecked,
+  OnDestroy,
 } from '@angular/core';
 import { LazyElementConfig } from '../../core/lazy-element-config';
 
@@ -16,11 +17,13 @@ import { LazyElementConfig } from '../../core/lazy-element-config';
   styleUrls: ['./lazy-element.component.scss'],
 })
 export class LazyElementComponent
-  implements AfterViewChecked, OnChanges, OnInit {
+  implements AfterViewChecked, OnChanges, OnDestroy, OnInit {
   //  Fields
   protected get childEls(): HTMLElement[] {
     return [].slice.call(this.native.children);
   }
+
+  protected cleanupFunctions: any;
 
   protected get headScripts(): HTMLScriptElement[] {
     return [].slice.call(document.querySelectorAll('script'));
@@ -35,6 +38,9 @@ export class LazyElementComponent
   }
 
   //  Properties
+  @Input('actions')
+  public Actions: { [event: string]: Function };
+
   @Input('config')
   public Config: LazyElementConfig;
 
@@ -42,7 +48,9 @@ export class LazyElementComponent
   public Context: any;
 
   //  Constructors
-  constructor(protected el: ElementRef) {}
+  constructor(protected el: ElementRef) {
+    this.cleanupFunctions = {};
+  }
 
   //  Life Cycle
   public ngAfterViewChecked() {}
@@ -65,9 +73,19 @@ export class LazyElementComponent
     }
   }
 
+  public ngOnDestroy() {
+    // this.cleanupActions();
+  }
+
   public ngOnInit() {}
 
   //  Helpers
+  protected cleanupActions(el: HTMLElement) {
+    Object.keys(this.cleanupFunctions || {}).forEach((eventKey) => {
+      el.removeEventListener(eventKey, this.cleanupFunctions[eventKey]);
+    });
+  }
+
   protected clearElement(prevConfig: LazyElementConfig) {
     const els = this.childEls.filter(
       (cn) => cn.nodeName === this.Config.ElementName.toUpperCase()
@@ -198,7 +216,22 @@ export class LazyElementComponent
     }
   }
 
-  protected mapElementOutputs(el: HTMLElement) {}
+  protected mapElementOutputs(el: HTMLElement) {
+    Object.keys(this.Actions || {})?.forEach((eventKey) => {
+      const action = this.Actions[eventKey];
+
+      if (action) {
+        const handler = (e) => {
+          action(e.detail);
+        };
+
+        this.cleanupFunctions[eventKey] = el.addEventListener(
+          eventKey,
+          handler
+        );
+      }
+    });
+  }
 
   protected transformContext() {
     return this.Context;

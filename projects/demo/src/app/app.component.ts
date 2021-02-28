@@ -44,6 +44,13 @@ export class AppComponent implements OnInit {
       ],
       ElementName: 'landing-pages-home-page-element',
     },
+    'lcu-billing-plan-view-element': {
+      Scripts: [
+        'https://www.iot-ensemble.com/_lcu/lcu-billing-lcu/wc/lcu-billing.lcu.js',
+      ],
+      Styles: [],
+      ElementName: 'lcu-billing-plan-view-element',
+    },
   };
 
   public ElementTokens: LazyElementToken[] = [
@@ -51,6 +58,13 @@ export class AppComponent implements OnInit {
     //   Name: 'lcu-device-data-flow-manage-element',
     //   StateKey: null,
     // },
+    {
+      Name: 'lcu-billing-plan-view-element',
+      StateKey: 'Billing',
+      ActionKeys: {
+        'buy-now-click': 'Pricing.BuyNowClick',
+      },
+    },
     // {
     //   Name: 'landing-pages-blocks-element',
     //   StateKey: 'LandingPages.Blocks',
