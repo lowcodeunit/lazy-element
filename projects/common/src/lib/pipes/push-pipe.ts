@@ -1,7 +1,7 @@
 //  TODO:  Is this hosted standalone anywhere?
 //  https://raw.githubusercontent.com/Toxicable/angular/798ce0b5288c7a8b522d1ca710a4f64e427e931c/packages/common/src/pipes/push_pipe.ts
 
-import { Pipe, PipeTransform, ChangeDetectorRef, WrappedValue, NgZone, OnDestroy } from '@angular/core';
+import { Pipe, PipeTransform, ChangeDetectorRef, NgZone, OnDestroy } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs';
@@ -40,7 +40,7 @@ export class PushPipe implements PipeTransform, OnDestroy {
     }
     this.lastReturnedValue = this.value;
 
-    return WrappedValue.wrap(this.value);
+    return this.value;
   }
   ngOnDestroy() {
     this.dispose();
